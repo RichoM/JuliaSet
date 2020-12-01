@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://icon.gd" type="Script" id=2]
+[ext_resource path="res://ShaderTest2.tscn" type="PackedScene" id=3]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float real = 0.25;
+uniform float imaginary = 0.3;
+uniform int iterations = 200;
+
+void fragment() {
+	float x = -1.75 + UV.x * 3.5;
+	float y = -1.5 + UV.y * 3.0;
+	
+	int count = 0;
+	for (int i = 0; i < iterations; i++) {
+		if (x*x + y*y > 4.0) break;
+		count = i;
+        
+		float new_x = x*x - y*y + real;
+		float new_y = 2.0*x*y + imaginary;
+		x = new_x;
+		y = new_y;	
+	}
+	float alk = float(count) / (float(iterations) / 5.0);
+	COLOR = vec4(alk, 0, alk, 1);
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/real = 0.25
+shader_param/imaginary = 0.3
+shader_param/iterations = 200
+
+[node name="Node2D" type="Node2D"]
+
+[node name="icon" type="Sprite" parent="."]
+material = SubResource( 2 )
+position = Vector2( -2.94118, -0.941193 )
+scale = Vector2( 16.0971, 9.43127 )
+texture = ExtResource( 1 )
+centered = false
+script = ExtResource( 2 )
+
+[node name="Node2D" parent="." instance=ExtResource( 3 )]
+position = Vector2( 61.5593, 65.2124 )
