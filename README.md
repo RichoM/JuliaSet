@@ -1,1 +1,1 @@
-[Online demo](https://richom.github.io/ShaderTest/build/ShaderExample.html)
+[DEMO](https://richom.github.io/JuliaSet/build/demo.html)
